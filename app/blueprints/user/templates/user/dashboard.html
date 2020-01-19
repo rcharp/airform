@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Dashboard - Domain</title>
+        <title>Dashboard - Airform</title>
 
         <meta name="description" content="OneUI - Admin Dashboard Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -107,18 +107,23 @@
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Actions</li>
                                 <li>
-                                    <a tabindex="-1" onclick="return NewIntegrationPane();" href="javascript:void(0)">
-                                        <i class="si si-layers pull-right"></i>My Integrations
+                                    <a tabindex="-1" href="{{ url_for('user.dashboard') }}">
+                                        <i class="si si-grid pull-right"></i>Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a tabindex="-1" href="{{ url_for('user.newform') }}">
+                                        <i class="si si-doc pull-right"></i>New Form
+                                    </a>
+                                </li>
+                                <li>
+                                    <a tabindex="-1" href="{{ url_for('user.settings') }}">
+                                        <i class="si si-settings pull-right"></i>Settings
                                     </a>
                                 </li>
                                 <li>
                                     <a tabindex="-1" href="{{ url_for('user.contact') }}">
                                         <i class="si si-bubbles pull-right"></i>Contact us
-                                    </a>
-                                </li>
-                                <li>
-                                    <a tabindex="-1" onclick="return SettingsPane();" href="javascript:void(0)">
-                                        <i class="si si-settings pull-right"></i>Settings
                                     </a>
                                 </li>
                                 <li>
@@ -142,8 +147,8 @@
                     </li>
                     <li>
                         <a href="{{ url_for('page.home') }}">
-                          <img src="{{ url_for('static', filename='assets/images/logos/domain.png') }}"
-                               height="40" title="Domain" alt="Domain"/>
+                          <img src="{{ url_for('static', filename='assets/images/logos/quickflow.png') }}"
+                               height="40" title="Airform" alt="Airform"/>
                         </a>
                     </li>
                 </ul>
@@ -170,7 +175,81 @@
                 </div>
                 <!-- Page Content -->
                 <div class="content" style="min-height:1000px;">
-
+                    <!-- Start Content -->
+                    <div class="row" style="margin-bottom:150px;">
+                        <div class="col-md-4" style="width:40%; margin:0 auto; min-width:320px; float:none;">
+                            <!-- Block Tabs Alternative Style -->
+                            <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                <ul class="nav nav-tabs nav-tabs-alt text-center" data-toggle="tabs">
+                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width:45%;display:block">
+                                        <a href="#settings"><h3>My Dashboard &nbsp;&nbsp;<i class="si si-grid"></i></h3></a>
+                                    </li>
+                                </ul>
+                                <div class="block-content tab-content" id="tab_content" style="padding-right:10px;overflow:visible !important; min-height:500px;">
+                                    <div class="tab-pane active" id="dashboard" name="tab_pane" style="min-height:250px;overflow:hidden">
+                                        <div class="col-lg-8" style="width:100%; margin:0 auto; float:none;">
+                                            <!-- Bootstrap Login -->
+                                            <div class="block block-themed">
+                                                {% if bases|length == 0 %}
+                                                    <font color="red">It looks like you don't have any Airtable bases connected yet. Enter a base ID below to get started.</font>
+                                                    <div class="block-content">
+                                                        <form class="form-horizontal push-5-t" action="{{ url_for('user.add_base') }}" method="post">
+                                                            <div class="form-group">
+                                                                <h4>Add a new Airtable base</h4><br />
+                                                                <label class="col-md-12" for="base-id">Enter a base ID.<br /><br />You can find it by going to <a href="https://airtable.com/api" target=”_blank”>the Airtable API</a>, clicking on your desired base, then copying the key in green that starts with "app...".<br /></label>
+                                                                <img src="../../../../static/images/base_id.png" class="img-fluid mt-5 mt-lg-0" width="500px">
+                                                                <div class="col-md-12">
+                                                                    <input required class="form-control" type="text" id="base-id" name="base-id" placeholder="Enter a base ID">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-12" for="api-key">Choose or enter an API key for this base. You can find it on your <a href="https://airtable.com/account" target=”_blank”>Airtable account page</a>.</label>
+                                                                <div class="col-md-12">
+                                                                    <input required class="form-control" type="text" list="keys" id="api-key" name="api-key" placeholder="Enter an API key">
+                                                                    <datalist id="keys">
+                                                                        {% for key in keys %}
+                                                                            <option value="{{ key.api_key }}">{{ key.api_key }}</option>
+                                                                        {% endfor %}
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-xs-12">
+                                                                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-arrow-right push-5-r"></i> Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                {% else %}
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center" style="width:150px;"># forms created</th>
+                                                                <th class="text-center">Table</th>
+                                                                <th class="text-center">Base</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for base in bases %}
+                                                            <tr>
+                                                                <td class="text-center">1</td>
+                                                                <td class="text-center">{{ base.base_id }}</td>
+                                                                <td class="text-center">{{ base.api_key }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                {% endif %}
+                                            </div>
+                                            <!-- END Bootstrap Login -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Block Tabs Alternative Style -->
+                        </div>
+                    </div>
+                    <!-- end first row -->
                 </div>
                 <!-- END Page Content -->
             </main>
@@ -179,7 +258,7 @@
             <!-- Footer -->
             <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
                 <div class="pull-right">
-                    <a href="https://www.domain.com/contact">Contact Us</a> | <a href="https://www.domain.com/privacy">Privacy Policy</a> | <a href="https://www.domain.com/terms">Terms of Service</a>
+                    <a href="https://www.getquickflow.com/contact">Contact Us</a> | <a href="https://www.getquickflow.com/privacy">Privacy Policy</a> | <a href="https://www.getquickflow.com/terms">Terms of Service</a>
                 </div>
                 <div class="pull-left">
                     <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank">OneUI 3.1</a> &copy; <span class="js-year-copy"></span>
@@ -249,5 +328,43 @@
             });
         </script>
 
+        <script>
+            function ChangeSortIcon(sel) {
+                if (sel.id === 'name_header'){
+                    if (document.getElementById('name-sort-icon').classList.contains('fa-sort') || document.getElementById('name-sort-icon').classList.contains('fa-arrow-down')) {
+                        document.getElementById('name-sort-icon').classList.remove('fa-arrow-down');
+                        document.getElementById('name-sort-icon').classList.remove('fa-sort');
+                        document.getElementById('name-sort-icon').classList.add('fa-arrow-up');
+                    }
+                    else if (document.getElementById('name-sort-icon').classList.contains('fa-arrow-up')) {
+                        document.getElementById('name-sort-icon').classList.remove('fa-arrow-up');
+                        document.getElementById('name-sort-icon').classList.add('fa-arrow-down');
+                    }
+
+                    // reset the date header sort icon
+                    document.getElementById('date-sort-icon').classList.remove('fa-arrow-down');
+                    document.getElementById('date-sort-icon').classList.remove('fa-arrow-up');
+                    document.getElementById('date-sort-icon').classList.add('fa-sort');
+                }
+                else if (sel.id === 'date_header'){
+                    if (document.getElementById('date-sort-icon').classList.contains('fa-sort') || document.getElementById('date-sort-icon').classList.contains('fa-arrow-down')) {
+                        document.getElementById('date-sort-icon').classList.remove('fa-arrow-down');
+                        document.getElementById('date-sort-icon').classList.remove('fa-sort');
+                        document.getElementById('date-sort-icon').classList.add('fa-arrow-up');
+                    }
+                    else if (document.getElementById('date-sort-icon').classList.contains('fa-arrow-up')) {
+                        document.getElementById('date-sort-icon').classList.remove('fa-arrow-up');
+                        document.getElementById('date-sort-icon').classList.add('fa-arrow-down');
+                    }
+
+                    // reset the name header sort icon
+                    document.getElementById('name-sort-icon').classList.remove('fa-arrow-down');
+                    document.getElementById('name-sort-icon').classList.remove('fa-arrow-up');
+                    document.getElementById('name-sort-icon').classList.add('fa-sort');
+                }
+            }
+        </script>
+
     </body>
+    <div id="page-loader"></div>
 </html>

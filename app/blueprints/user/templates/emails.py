@@ -146,57 +146,6 @@ def send_cancel_email(email):
     mail.send(msg)
 
 
-def send_no_integrations_email(email):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("We've noticed you haven't created any Domain integrations!",
-                  sender="support@domain.com",
-                  recipients=[email])
-
-    msg.html = render_template('user/mail/no_integrations_email.html')
-
-    mail.send(msg)
-
-
-def send_request_email(email, request):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("New integration request",
-                  sender="support@domain.com",
-                  recipients=['support@domain.com'])
-
-    msg.body = email + " sent you an integration request:\n\n" + "From app: " + request['request_from'] + "\n\n" + "To app: " + request['request_to'] + "\n\n" + request
-
-    response = Message("Your email to Domain has been received.",
-                       recipients=[email],
-                       sender="support@domain.com")
-
-    mail.send(msg)
-    mail.send(response)
-
-
-def send_integration_failed_email(email, integration_id, failure_time):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("Domain: Integration #" + str(integration_id) + " failed.",
-                  sender="support@domain.com",
-                  recipients=[email])
-
-    from app.blueprints.api.models.user_integrations import UserIntegration
-
-    integration = UserIntegration.query.filter(UserIntegration.id == integration_id).scalar()
-
-    from app.blueprints.page.date import get_dt_string, get_datetime_from_string
-    failure_time = get_dt_string(get_datetime_from_string(failure_time)) + ' (UTC)'
-
-    msg.html = render_template('user/mail/integration_failed_email.html', integration=integration, failure_time=failure_time)
-
-    mail.send(msg)
-
-
 def send_failed_log_email(email, integration_id, failure_time):
     app = Flask(__name__)
     mail = Mail()

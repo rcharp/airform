@@ -16,6 +16,7 @@ from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.blueprints.billing.models.credit_card import CreditCard
 from app.blueprints.billing.models.subscription import Subscription
 from app.blueprints.api.models.app_auths import AppAuthorization
+from app.blueprints.api.models.bases import Base
 from app.extensions import db
 
 
@@ -34,6 +35,8 @@ class User(UserMixin, ResourceMixin, db.Model):
     subscription = db.relationship(Subscription, uselist=False, lazy='subquery',
                                    backref='users', passive_deletes=True)
     app_authorization = db.relationship(AppAuthorization, uselist=False, backref='users', lazy='subquery',
+                                        passive_deletes=True)
+    base = db.relationship(Base, uselist=False, backref='users', lazy='subquery',
                                         passive_deletes=True)
 
     # Authentication.

@@ -4,24 +4,13 @@ cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/
 webhook: celery -A app.blueprints.billing.webhooks worker -B -S redbeat.RedBeatScheduler -l info --loglevel=INFO
 webhook: celery -A app.blueprints.billing.webhooks worker -B -l info --loglevel=INFO --concurrency 1
 
-# Docker Commands
-=================
-# Docker db new app args tables
-docker-compose exec website domain db add-tables
-
-# Docker db new events and actions
-docker-compose exec website domain db new-events-actions
-
-# Docker db new apps
-docker-compose exec website domain db add-new-apps
-
 Heroku Backup Database
 =====================
 # Manual database backup
-heroku pg:backups:capture --app getdomain
+heroku pg:backups:capture --app getairform
 
 # Get database backup URL
-heroku pg:backups:url b001 --app getdomain
+heroku pg:backups:url b001 --app getairform
 
 Ngrok
 ==============
@@ -108,34 +97,34 @@ Docker DB commands
 =================
 
 # Docker db commands
-docker-compose exec website domain db [command_name]
+docker-compose exec website airform db [command_name]
 
 # Reset db
-docker-compose exec website domain db reset
+docker-compose exec website airform db reset
 
 # Show tables in db
 docker exec -it $(docker-compose ps -q postgres9 ) psql -Upostgres -c '\z'
 
 # Add fake users
-docker-compose exec website domain add all
+docker-compose exec website airform add all
 
 # Test coverage
-docker-compose exec website domain cov
+docker-compose exec website airform cov
 
 # Generate a secret key for production
-docker-compose exec website domain secret
+docker-compose exec website airform secret
 
 # Generate secret key 64 bytes
-docker-compose exec website domain secret 64
+docker-compose exec website airform secret 64
 
 # All website's routes
-docker-compose exec website domain routes
+docker-compose exec website airform routes
 
 # Count lines of code
-docker-compose exec website domain loc
+docker-compose exec website airform loc
 
 # List all stripe charges
-docker-compose exec website domain stripe list_charges
+docker-compose exec website airform stripe list_charges
 
 
 Changes

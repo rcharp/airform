@@ -8,7 +8,7 @@ class TestTasks(object):
         """ Deliver a contact email. """
         form = {
           'email': 'foo@bar.com',
-          'message': 'Test message from Domain.'
+          'message': 'Test message from Airform.'
         }
 
         with mail.record_messages() as outbox:

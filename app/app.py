@@ -36,7 +36,6 @@ CELERY_TASK_LIST = [
     'app.blueprints.api.tasks',
     'app.blueprints.contact.tasks',
     'app.blueprints.user.tasks',
-    # 'app.blueprints.api.tasks',
     'app.blueprints.billing.tasks'
 ]
 
@@ -169,14 +168,8 @@ def template_processors(app):
     :return: App jinja environment
     """
     app.jinja_env.filters['format_currency'] = format_currency
-    app.jinja_env.filters['imported_action_filter'] = imported_action_filter
-    app.jinja_env.filters['imported_item_id_filter'] = imported_item_id_filter
-    app.jinja_env.filters['imported_app_filter'] = imported_app_filter
-    app.jinja_env.filters['imported_dropdown_filter'] = imported_dropdown_filter
     app.jinja_env.filters['pretty_date_filter'] = pretty_date_filter
     app.jinja_env.filters['logo_filter'] = logo_filter
-    app.jinja_env.filters['have_events'] = have_events
-    app.jinja_env.filters['have_actions'] = have_actions
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env
@@ -281,56 +274,10 @@ def exception_handler(app):
     return None
 
 
-def imported_action_filter(arg):
-    if ';;' in arg:
-        return arg.split(';;')[0]
-
-    return arg
-
-
-def imported_item_id_filter(arg):
-    if ';;' in arg:
-        item = arg.split(';;')[1]
-
-        if '_' in item:
-            return item.split('_')[0]
-
-    return arg
-
-
-def imported_app_filter(arg):
-    if ';;' in arg:
-        item = arg.split(';;')[1]
-
-        if '_' in item:
-            return item.split('_')[1]
-
-    return arg
-
-
 def logo_filter(arg, k):
     if 'Imported from ' in arg:
         return 'import'
     return k
-
-
-def imported_dropdown_filter(arg):
-    if arg == 'event' or arg == 'action':
-        return arg.title()
-    return 'Additional Action ' + str(arg)
-
-
-def have_events(arg, apps):
-    from app.blueprints.api.models.app_events import AppEvent
-    event_apps = [e for e in apps if e.name in [event.app for event in AppEvent.query.filter(AppEvent.active.is_(True)).distinct(AppEvent.app).group_by(AppEvent).all()]]
-
-    return any(x.name == arg for x in event_apps)
-
-
-def have_actions(arg, apps):
-    from app.blueprints.api.models.app_actions import AppAction
-    action_apps = [a for a in apps if a.name in [action.app for action in AppAction.query.filter(AppAction.active.is_(True)).distinct(AppAction.app).group_by(AppAction).all()]]
-    return any(x.name == arg for x in action_apps)
 
 
 def pretty_date_filter(arg):

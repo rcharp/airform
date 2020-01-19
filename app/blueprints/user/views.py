@@ -35,8 +35,10 @@ import datetime
 from lib.airtable_wrapper.airtable.airtable import Airtable
 from app.extensions import cache, csrf, timeout, db
 from importlib import import_module
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, exists
 from app.blueprints.api.api_functions import print_traceback
+from app.blueprints.api.models.bases import Base
+from app.blueprints.api.models.app_auths import AppAuthorization
 
 user = Blueprint('user', __name__, template_folder='templates')
 
@@ -207,12 +209,6 @@ def update_credentials():
     return render_template('user/update_credentials.html', form=form)
 
 
-@user.route('/settings', methods=['GET', 'POST'])
-@csrf.exempt
-def settings():
-    return redirect(url_for('user.dashboard'))
-
-
 # Dashboard -------------------------------------------------------------------
 @user.route('/dashboard', methods=['GET','POST'])
 @login_required
@@ -234,7 +230,60 @@ def dashboard():
         current_user.trial = False
         current_user.save()
 
-    return render_template('user/dashboard.html', current_user=current_user, trial_days_left=trial_days_left)
+    from app.blueprints.api.models.bases import Base
+
+    bases = Base.query.filter(Base.user_id == current_user.id).all()
+    keys = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).all()
+
+    return render_template('user/dashboard.html', current_user=current_user, bases=bases, keys=keys)
+
+
+# Form -------------------------------------------------------------------
+@user.route('/newform', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def newform():
+
+    if current_user.role == 'admin':
+        return redirect(url_for('admin.dashboard'))
+
+    # Get settings trial information
+    trial_days_left = -1
+    if not current_user.subscription and not current_user.trial and current_user.role == 'member':
+        flash(Markup("Your free trial has expired. Please <a href='/subscription/update'>sign up</a> for a plan to continue."), category='error')
+
+    if current_user.trial and current_user.role == 'member':
+        trial_days_left = 14 - (datetime.datetime.now() - current_user.created_on.replace(tzinfo=None)).days
+
+    if trial_days_left < 0:
+        current_user.trial = False
+        current_user.save()
+
+    return render_template('user/newform.html', current_user=current_user)
+
+
+# Settings -------------------------------------------------------------------
+@user.route('/settings', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def settings():
+
+    if current_user.role == 'admin':
+        return redirect(url_for('admin.dashboard'))
+
+    # Get settings trial information
+    trial_days_left = -1
+    if not current_user.subscription and not current_user.trial and current_user.role == 'member':
+        flash(Markup("Your free trial has expired. Please <a href='/subscription/update'>sign up</a> for a plan to continue."), category='error')
+
+    if current_user.trial and current_user.role == 'member':
+        trial_days_left = 14 - (datetime.datetime.now() - current_user.created_on.replace(tzinfo=None)).days
+
+    if trial_days_left < 0:
+        current_user.trial = False
+        current_user.save()
+
+    return render_template('user/settings.html', current_user=current_user, trial_days_left=trial_days_left)
 
 
 # Contact us -------------------------------------------------------------------
@@ -266,9 +315,43 @@ def auth(app):
         return redirect(url_for('user.dashboard'))
 
 
-@user.route('/get_airtable_event_class', methods=['POST'])
+@user.route('/add_base', methods=['POST'])
 @csrf.exempt
-def get_airtable_event_class():
+def add_base():
+    if request.method == 'POST':
+        try:
+            if 'base-id' in request.form and 'api-key' in request.form:
+
+                if db.session.query(exists().where(and_(Base.base_id == request.form['base-id'], Base.api_key == request.form['api-key']))).scalar():
+                    flash("This account is already in use. Please try again.", 'error')
+                else:
+                    auth = AppAuthorization.query.filter(AppAuthorization.api_key == request.form['api-key']).scalar()
+                    if auth is None:
+                        a = AppAuthorization()
+                        a.user_id = current_user.id
+                        a.api_key = request.form['api-key']
+                        a.save()
+
+                    if db.session.query(exists().where(AppAuthorization.api_key == request.form['api-key'])).scalar():
+                        b = Base()
+                        b.user_id = current_user.id
+                        b.base_id = request.form['base-id']
+                        b.api_key = request.form['api-key']
+
+                        b.save()
+
+                        flash('Your base has been successfully added!', 'success')
+
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your base. Please try again.', 'error')
+
+        return redirect(url_for('user.dashboard'))
+
+
+@user.route('/get_airtable_bases', methods=['POST'])
+@csrf.exempt
+def get_airtable_bases():
     if request.method == 'POST':
         try:
 
@@ -345,3 +428,10 @@ def run_tests():
         pass
 
     return redirect(url_for('user.dashboard'))
+
+
+@user.route('/colorlib', methods=['GET','POST'])
+@csrf.exempt
+def colorlib():
+
+    return render_template('user/colorlib.html', current_user=current_user)

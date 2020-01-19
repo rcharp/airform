@@ -1,4 +1,4 @@
 
         [console_scripts]
-        domain=cli.cli:cli
+        airform=cli.cli:cli
     

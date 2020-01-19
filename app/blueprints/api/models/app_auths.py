@@ -10,14 +10,7 @@ class AppAuthorization(ResourceMixin, db.Model):
 
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
-    app_name = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    app_fullname = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    account = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    account_id = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    access_token = db.Column(db.String(500), unique=False, index=True, nullable=True, server_default='')
-    refresh_token = db.Column(db.String(500), unique=False, index=True, nullable=True, server_default='')
-    cursor = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    password = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    api_key = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
