@@ -238,12 +238,11 @@ def dashboard():
     return render_template('user/dashboard.html', current_user=current_user, bases=bases, keys=keys)
 
 
-# Form -------------------------------------------------------------------
+# Forms and Bases -------------------------------------------------------------------
 @user.route('/new_form', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def new_form():
-
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
 
@@ -360,7 +359,18 @@ def connect_table():
                     flash('Your table has been successfully added! Please select one from the list.', 'success')
 
             elif 'existing-table' in request.form:
-                flash('Existing table has been selected.', 'success')
+                from app.blueprints.api.api_functions import get_table
+
+                table = Table.query.filter(and_(Table.table_name == request.form['existing-table']), Table.user_id == current_user.id).scalar()
+                base_id = table.base_id
+
+                from app.blueprints.api.app_auths import AppAuthorization
+                auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
+                api_key = auth.api_key
+
+                t = get_table(request.form['existing-table'], base_id, api_key)
+
+                return render_template('user/create_form.html', table_name=request.form['existing-table'])
             else:
                 flash('Please select an existing table or add a new one.', 'error')
 
@@ -400,6 +410,28 @@ def add_table():
 
         return render_template('user/connect_table.html', base=request.form['base-id'])
 
+
+@user.route('/create_form', methods=['POST'])
+@login_required
+@csrf.exempt
+def create_form():
+    from app.blueprints.api.models.tables import Table
+
+    if request.method == 'POST':
+        try:
+            from app.blueprints.api.models.bases import Base
+
+            if 'table-name' in request.form and request.form['table-name']:
+
+
+                tables = Table.query.filter(and_(Table.user_id == current_user.id),
+                                        Table.base_id == request.form['base-id']).all()
+                return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your table. Please try again.', 'error')
+
+        return redirect(url_for('user.dashboard'))
 
 # Settings -------------------------------------------------------------------
 @user.route('/settings', methods=['GET','POST'])
