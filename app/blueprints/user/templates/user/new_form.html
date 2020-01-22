@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Dashboard - Airform</title>
+        <title>New Form - Airform</title>
 
         <meta name="description" content="OneUI - Admin Dashboard Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -59,6 +59,21 @@
 
         <!-- Shepherd JS -->
         <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>
+
+        <!-- Colorlib -->
+        <!-- Icons font CSS-->
+        <link href="../../../../static/colorlib/form/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+        <link href="../../../../static/colorlib/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+        <!-- Font special for pages-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <!-- Vendor CSS-->
+        <link href="../../../../static/colorlib/form/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+        <link href="../../../../static/colorlib/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+        <!-- Main CSS-->
+        <link href="../../../../static/colorlib/form/css/main.css" rel="stylesheet" media="all">
+        <!-- End Colorlib -->
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="../../../../static/oneui/assets/css/themes/flat.min.css"> -->
@@ -162,7 +177,7 @@
                     <div class="row items-push">
                         <div class="col-sm-7">
                             <h1 class="font-w300 text-white">
-                                Dashboard
+                                New Form
                             </h1>
                         </div>
                     </div>
@@ -177,69 +192,47 @@
                 <div class="content" style="min-height:1000px;">
                     <!-- Start Content -->
                     <div class="row" style="margin-bottom:150px;">
-                        <div class="col-md-4" style="width:40%; margin:0 auto; min-width:320px; float:none;">
+                        <div class="col-lg-12" style="width:40%;min-width:320px; margin:0 auto; float:none;">
                             <!-- Block Tabs Alternative Style -->
                             <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                 <ul class="nav nav-tabs nav-tabs-alt text-center" data-toggle="tabs">
-                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width:45%;display:block">
-                                        <a href="#settings"><h3>My Dashboard &nbsp;&nbsp;<i class="si si-grid"></i></h3></a>
+                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width100%;display:block">
+                                        <a href="#settings"><h3>Connect to an Airtable base&nbsp;<i class="si si-doc"></i></h3></a>
                                     </li>
                                 </ul>
                                 <div class="block-content tab-content" id="tab_content" style="padding-right:10px;overflow:visible !important; min-height:500px;">
-                                    <div class="tab-pane active" id="dashboard" name="tab_pane" style="min-height:250px;overflow:hidden">
-                                        <div class="col-lg-8" style="width:100%; margin:0 auto; float:none;">
+                                    <div class="tab-pane active" id="newform" name="tab_pane" style="min-height:250px;overflow:hidden">
+                                        <div class="col-md-4" style="width:90%; margin:0 auto; float:none;">
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
-                                                {% if bases|length == 0 %}
-                                                    <font color="red">It looks like you don't have any Airtable bases connected yet. Enter a base ID below to get started.</font>
-                                                    <div class="block-content">
-                                                        <form class="form-horizontal push-5-t" action="{{ url_for('user.add_base') }}" method="post">
-                                                            <div class="form-group">
-                                                                <h4>Add a new Airtable base</h4><br />
-                                                                <label class="col-md-12" for="base-id">Enter a base ID.<br /><br />You can find it by going to <a href="https://airtable.com/api" target=”_blank”>the Airtable API</a>, clicking on your desired base, then copying the key in green that starts with "app...".<br /></label>
-                                                                <img src="../../../../static/images/base_id.png" class="img-fluid mt-5 mt-lg-0" width="500px">
-                                                                <div class="col-md-12">
-                                                                    <input required class="form-control" type="text" id="base-id" name="base-id" placeholder="Enter a base ID">
-                                                                </div>
+                                                <div class="block-content">
+                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_base', bases=bases ) }}" method="post">
+                                                        <div class="form-group">
+                                                            <h4>Choose an existing Airtable base</h4><br />
+                                                            <label class="col-md-12" for="existing-base">Select a base</label>
+                                                            <div class="col-xs-12">
+                                                                <select class="form-control" id="existing-base" name="existing-base" size="1">
+                                                                    {% for base in bases %}
+                                                                        <option value="{{ base.base_id }}">{{ base.base_id }}</option>
+                                                                    {% endfor %}
+                                                                </select>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label class="col-md-12" for="api-key">Choose or enter an API key for this base. You can find it on your <a href="https://airtable.com/account" target=”_blank”>Airtable account page</a>.</label>
-                                                                <div class="col-md-12">
-                                                                    <input required class="form-control" type="text" list="keys" id="api-key" name="api-key" placeholder="Enter an API key">
-                                                                    <datalist id="keys">
-                                                                        {% for key in keys %}
-                                                                            <option value="{{ key.api_key }}">{{ key.api_key }}</option>
-                                                                        {% endfor %}
-                                                                    </datalist>
-                                                                </div>
+                                                        </div>
+                                                        <h3>- or -</h3><br />
+                                                        <div class="form-group">
+                                                            <h4>Add a new Airtable base</h4><br />
+                                                            <label class="col-md-12" for="new-base">Enter a base ID</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" type="text" id="new-base" name="new-base" placeholder="Enter a base id" onkeyup="NewBase(this)">
                                                             </div>
-                                                            <div class="form-group">
-                                                                <div class="col-xs-12">
-                                                                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-arrow-right push-5-r"></i> Submit</button>
-                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-xs-12">
+                                                                <button class="btn btn-sm btn-primary" id="submit-button" type="submit" style="float:right"><i class="fa fa-arrow-right push-5-r"></i> Continue</button>
                                                             </div>
-                                                        </form>
-                                                    </div>
-                                                {% else %}
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center" style="width:150px;"># forms created</th>
-                                                                <th class="text-center">Table</th>
-                                                                <th class="text-center">Base</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {% for base in bases %}
-                                                            <tr>
-                                                                <td class="text-center">1</td>
-                                                                <td class="text-center">{{ base.base_id }}</td>
-                                                                <td class="text-center">{{ base.api_key }}</td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                             <!-- END Bootstrap Login -->
                                         </div>
@@ -361,6 +354,19 @@
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-down');
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-up');
                     document.getElementById('name-sort-icon').classList.add('fa-sort');
+                }
+            }
+
+            function NewBase(e){
+                var input = '';
+                input += e.value;
+                if (input.length > 0){
+                    document.getElementById('existing-base').disabled = true;
+                    document.getElementById('submit-button').innerHTML = '<i class="fa fa-arrow-right push-5-r"></i>' + ' Add base';
+                }
+                else {
+                    document.getElementById('existing-base').disabled = false;
+                    document.getElementById('submit-button').innerHTML = '<i class="fa fa-arrow-right push-5-r"></i>' + ' Continue';
                 }
             }
         </script>

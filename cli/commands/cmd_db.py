@@ -10,6 +10,7 @@ from app.extensions import db
 from app.blueprints.user.models import User
 from app.blueprints.api.models.app_auths import AppAuthorization
 from app.blueprints.api.models.bases import Base
+from app.blueprints.api.models.tables import Table
 from importlib import import_module
 from app.blueprints.api.api_functions import print_traceback
 

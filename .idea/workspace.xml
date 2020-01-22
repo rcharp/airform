@@ -6,45 +6,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d4f0b59-84fb-4625-a7ad-7e140c7c51ad" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/blueprints/api/models/bases.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/colorlib.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/colorlib/form/dropdown.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/blueprints/api/models/tables.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/connect_table.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/dependency_links.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/dependency_links.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/entry_points.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/entry_points.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/requires.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain_CLI.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Airform_CLI.egg-info/top_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/PKG-INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/SOURCES.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/dependency_links.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/entry_points.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/requires.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quickflow_CLI.egg-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Useful Commands.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Useful Commands.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/api/api_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/api_functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/api/models/app_auths.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/models/app_auths.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/emails.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/emails.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/api/models/bases.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/models/bases.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/new_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/shepherd.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/shepherd.js/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/contact/test_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/contact/test_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/contact/test_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/contact/test_views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cli/commands/cmd_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli/commands/cmd_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/element-matches/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/element-matches/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/lodash-es/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/lodash-es/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/popper.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/popper.js/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/shepherd.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/shepherd.js/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/tippy.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/tippy.js/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vars.py" beforeDir="false" afterPath="$PROJECT_DIR$/vars.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -67,8 +39,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="327" column="118" selection-start-line="327" selection-start-column="118" selection-end-line="327" selection-end-column="118" />
+            <state relative-caret-position="76">
+              <caret line="348" column="157" selection-start-line="348" selection-start-column="157" selection-end-line="348" selection-end-column="157" />
               <folding>
                 <element signature="e#0#154#0" expanded="true" />
               </folding>
@@ -76,50 +48,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_auths.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/app_auths.py">
+      <file leaf-file-name="connect_table.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/connect_table.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="12" column="27" lean-forward="true" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="227" column="74" lean-forward="true" selection-start-line="227" selection-start-column="74" selection-end-line="227" selection-end-column="74" />
+            <state relative-caret-position="105">
+              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bases.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/bases.py">
+      <file leaf-file-name="tables.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/tables.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="46" lean-forward="true" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
+            <state relative-caret-position="240">
+              <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api_functions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/api/api_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="87" column="41" lean-forward="true" selection-start-line="87" selection-start-column="41" selection-end-line="87" selection-end-column="41" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newform.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html">
+      <file leaf-file-name="new_form.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/new_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="218" column="72" lean-forward="true" selection-start-line="218" selection-start-column="72" selection-end-line="218" selection-end-column="124" />
+            <state relative-caret-position="381">
+              <caret line="225" column="164" lean-forward="true" selection-start-line="225" selection-start-column="164" selection-end-line="225" selection-end-column="187" />
               <folding>
+                <element signature="n#style#0;n#div#0;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#11978#11984#0#HTML" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,24 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getquickflow.com</find>
-      <find>domain. om</find>
-      <find>quickflow</find>
-      <find>page.apps</find>
-      <find>DOMAIN</find>
-      <find>getair</find>
-      <find>My Settings</find>
-      <find>Quickflow</find>
-      <find>QUICKFLOW</find>
-      <find>Domain inte</find>
-      <find>My integrations</find>
-      <find>my settings</find>
-      <find>Account Settings</find>
-      <find>settings</find>
-      <find>My dashboard</find>
-      <find>Dashboard</find>
-      <find>pencil</find>
-      <find>grid</find>
       <find>Domain</find>
       <find>domain</find>
       <find>app_auths.py</find>
@@ -158,6 +115,25 @@
       <find>dashboard(</find>
       <find>choose or</find>
       <find>exists</find>
+      <find>forms cre</find>
+      <find>url_for</find>
+      <find>newform</find>
+      <find>connect to air</find>
+      <find>add_base</find>
+      <find>or</find>
+      <find>new form</find>
+      <find>choos an</find>
+      <find>create_form</find>
+      <find>enter a table</find>
+      <find>connect to an</find>
+      <find>current</find>
+      <find>from app.blueprints.api.models.app_auths</find>
+      <find>Base</find>
+      <find>.query.f</find>
+      <find>newbase</find>
+      <find>connect to an</find>
+      <find>where(</find>
+      <find>si si-</find>
     </findStrings>
     <replaceStrings>
       <replace>domain. om</replace>
@@ -169,6 +145,9 @@
       <replace>Airform</replace>
       <replace>airform</replace>
       <replace>Base</replace>
+      <replace>new_form</replace>
+      <replace>connect_table</replace>
+      <replace>Table</replace>
       <replace>&quot;../../../../static/colorlib/form/js/</replace>
     </replaceStrings>
     <dirStrings>
@@ -190,12 +169,10 @@
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/app/blueprints/billing/tasks.py" />
         <option value="$PROJECT_DIR$/app/blueprints/page/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/api/api_functions.py" />
         <option value="$PROJECT_DIR$/config/settings.py" />
         <option value="$PROJECT_DIR$/app/blueprints/api/app_auths.py" />
         <option value="$PROJECT_DIR$/app/blueprints/api/__init__.py" />
         <option value="$PROJECT_DIR$/app/blueprints/page/templates/page/index.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/new_form.html" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" />
         <option value="$PROJECT_DIR$/Useful Commands.txt" />
         <option value="$PROJECT_DIR$/app/app.py" />
@@ -203,11 +180,16 @@
         <option value="$PROJECT_DIR$/app/blueprints/user/models.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/form.html" />
         <option value="$PROJECT_DIR$/app/static/colorlib/form/dropdown.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/api/models/app_auths.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/api/models/bases.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/api/api_functions.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/api/models/app_auths.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/new_form.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/create_form.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/api/models/bases.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/api/models/tables.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/connect_table.html" />
       </list>
     </option>
   </component>
@@ -272,14 +254,25 @@
               <item name="airform" type="b2602c69:ProjectViewProjectNode" />
               <item name="airform" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="airform" type="b2602c69:ProjectViewProjectNode" />
               <item name="airform" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="airform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="airform" type="462c0819:PsiDirectoryNode" />
+              <item name="cli" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="airform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="airform" type="462c0819:PsiDirectoryNode" />
+              <item name="cli" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -298,9 +291,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/static/colorlib/form" />
       <recent name="$PROJECT_DIR$/app/blueprints/user/templates/user" />
       <recent name="$PROJECT_DIR$/app/blueprints/api/models" />
+      <recent name="$PROJECT_DIR$/app/static/colorlib/form" />
       <recent name="$PROJECT_DIR$/app/blueprints/api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -367,12 +360,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/forms.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/validations.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/emails.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -442,13 +429,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/api/api_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -537,15 +517,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_add.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2773">
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -553,34 +524,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1525">
-          <caret line="169" column="62" selection-start-line="169" selection-start-column="62" selection-end-line="169" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/colorlib/form/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="86" column="17" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="11" column="50" lean-forward="true" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -605,53 +552,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/newform.html">
+    <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/app_auths.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="218" column="72" lean-forward="true" selection-start-line="218" selection-start-column="72" selection-end-line="218" selection-end-column="124" />
+        <state relative-caret-position="195">
+          <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="183" column="81" lean-forward="true" selection-start-line="183" selection-start-column="81" selection-end-line="183" selection-end-column="107" />
           <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/api/api_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="87" column="41" lean-forward="true" selection-start-line="87" selection-start-column="41" selection-end-line="87" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_add.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2490">
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1290">
+          <caret line="87" column="17" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="26" column="6" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/bases.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="46" lean-forward="true" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
+        <state relative-caret-position="180">
+          <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/app_auths.py">
+    <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/tables.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="12" column="27" lean-forward="true" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="38" />
+        <state relative-caret-position="240">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/new_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="225" column="164" lean-forward="true" selection-start-line="225" selection-start-column="164" selection-end-line="225" selection-end-column="187" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#11978#11984#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="327" column="118" selection-start-line="327" selection-start-column="118" selection-end-line="327" selection-end-column="118" />
+        <state relative-caret-position="76">
+          <caret line="348" column="157" selection-start-line="348" selection-start-column="157" selection-end-line="348" selection-end-column="157" />
           <folding>
             <element signature="e#0#154#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/connect_table.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="227" column="74" lean-forward="true" selection-start-line="227" selection-start-column="74" selection-end-line="227" selection-end-column="74" />
+        <state relative-caret-position="105">
+          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

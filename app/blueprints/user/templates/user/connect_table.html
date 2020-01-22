@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Dashboard - Airform</title>
+        <title>Choose a table - Airform</title>
 
         <meta name="description" content="OneUI - Admin Dashboard Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -127,7 +127,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a tabindex="-1" href="{{ url_for('user.newform') }}">
+                                    <a tabindex="-1" href="{{ url_for('user.new_form') }}">
                                         <i class="si si-doc pull-right"></i>New Form
                                     </a>
                                 </li>
@@ -177,7 +177,7 @@
                     <div class="row items-push">
                         <div class="col-sm-7">
                             <h1 class="font-w300 text-white">
-                                New Form
+                                Choose a table
                             </h1>
                         </div>
                     </div>
@@ -192,46 +192,51 @@
                 <div class="content" style="min-height:1000px;">
                     <!-- Start Content -->
                     <div class="row" style="margin-bottom:150px;">
-                        <div class="col-lg-12" style="width:90%; margin:0 auto; min-width:450px; float:none;">
+                        <div class="col-lg-12" style="width:40%;min-width:320px; margin:0 auto; float:none;">
                             <!-- Block Tabs Alternative Style -->
                             <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                <ul class="nav nav-tabs nav-tabs-alt text-center" data-toggle="tabs">
-                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width:15%;display:block">
-                                        <a href="#settings"><h3>New Form &nbsp;&nbsp;<i class="si si-doc"></i></h3></a>
+                                <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
+                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width:100%;display:block">
+                                        <a href="#settings"><h3>Connect to a table&nbsp;<i class="si si-list"></i></h3></a>
                                     </li>
                                 </ul>
                                 <div class="block-content tab-content" id="tab_content" style="padding-right:10px;overflow:visible !important; min-height:500px;">
                                     <div class="tab-pane active" id="newform" name="tab_pane" style="min-height:250px;overflow:hidden">
-                                        <div class="col-md-4" style="width:40%; margin:0 auto; float:none;">
+                                        <div class="col-md-4" style="width:90%; margin:0 auto; float:none;">
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
-                                                <div class="block-header bg-primary">
-                                                    <h3>Connect to Airtable</h3>
-                                                </div>
                                                 <div class="block-content">
-                                                    <form class="form-horizontal push-5-t" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table', bases=bases ) }}" method="post">
                                                         <div class="form-group">
-                                                            <h4>Choose an existing Airtable base</h4><br />
-                                                            <label class="col-md-12" for="contact1-subject">Select a base</label>
+                                                            <h4>Selected base: {{ base }}</h4><br />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <h4>Choose an existing table</h4><br />
+                                                            <label class="col-md-12" for="existing-table">Select a table</label>
                                                             <div class="col-xs-12">
-                                                                <select class="form-control" id="contact1-subject" name="contact1-subject" size="1">
-                                                                    {% for base in bases %}
-                                                                        <option value="{{ base.id }}">{{ base.id }}</option>
+                                                                <select class="form-control" id="existing-table" name="existing-table" size="1">
+                                                                    {% for table in tables %}
+                                                                        <option value="{{ table.table_name }}">{{ table.table_name }}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <h5>or</h5><br />
+                                                        <h3>- or -</h3><br />
                                                         <div class="form-group">
-                                                            <h4>Add a new Airtable base</h4><br />
-                                                            <label class="col-md-12" for="login1-username">Enter a base ID</label>
+                                                            <h4>Add a new table</h4><br />
+                                                            <label class="col-md-12" for="table-name">Enter a table name</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" type="text" id="login1-username" name="login1-username" placeholder="Enter a base id">
+                                                                <input class="form-control" type="hidden" id="base-id" name="base-id" value="{{ base }}">
+                                                                <input class="form-control" type="text" id="table-name" name="table-name" placeholder="Table name" onkeyup="NewTable(this)">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="col-xs-12">
-                                                                <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-arrow-right push-5-r"></i> Submit</button>
+                                                                <button class="btn btn-sm btn-primary" id="back-button" type="button" style="float:left;"
+                                                                   onclick="window.location.href = '{{ url_for('user.new_form') }}'">
+                                                                    <i class="fa fa-arrow-left"></i>&nbsp;&nbsp; Back
+                                                                </button>
+                                                                <button class="btn btn-sm btn-primary" id="submit-button" type="submit" style="float:right"><i class="fa fa-arrow-right push-5-r"></i> Continue</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -357,6 +362,19 @@
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-down');
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-up');
                     document.getElementById('name-sort-icon').classList.add('fa-sort');
+                }
+            }
+
+            function NewTable(e){
+                var input = '';
+                input += e.value;
+                if (input.length > 0){
+                    document.getElementById('existing-table').disabled = true;
+                    document.getElementById('submit-button').innerHTML = '<i class="fa fa-arrow-right push-5-r"></i>' + ' Add table';
+                }
+                else {
+                    document.getElementById('existing-table').disabled = false;
+                    document.getElementById('submit-button').innerHTML = '<i class="fa fa-arrow-right push-5-r"></i>' + ' Continue';
                 }
             }
         </script>

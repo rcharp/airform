@@ -239,10 +239,10 @@ def dashboard():
 
 
 # Form -------------------------------------------------------------------
-@user.route('/newform', methods=['GET','POST'])
+@user.route('/new_form', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def newform():
+def new_form():
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
@@ -259,7 +259,146 @@ def newform():
         current_user.trial = False
         current_user.save()
 
-    return render_template('user/newform.html', current_user=current_user)
+    bases = Base.query.filter(Base.user_id == current_user.id).all()
+
+    return render_template('user/new_form.html', current_user=current_user, bases=bases)
+
+
+@user.route('/connect_base', methods=['POST'])
+@csrf.exempt
+def connect_base():
+    if request.method == 'POST':
+        try:
+            from app.blueprints.api.models.bases import Base
+            if 'new-base' in request.form and request.form['new-base']:
+                if db.session.query(exists().where(Base.base_id == request.form['new-base'])).scalar():
+                    flash("This base has already been added. Please try again.", 'error')
+                    return redirect(url_for('user.new_form'))
+                else:
+                    auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
+
+                    b = Base()
+                    b.user_id = current_user.id
+                    b.base_id = request.form['new-base']
+                    b.api_key = auth.api_key
+
+                    b.save()
+
+                    flash('Your base has been successfully added! Please select one from the list.', 'success')
+                    return redirect(url_for('user.new_form'))
+
+            elif 'existing-base' in request.form:
+                from app.blueprints.api.models.tables import Table
+                tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['existing-base']).all()
+                return render_template('user/connect_table.html', base=request.form['existing-base'], tables=tables)
+            else:
+                flash('Please select an existing base or add a new one.', 'error')
+                return redirect(url_for('user.new_form'))
+
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your base. Please try again.', 'error')
+
+        return redirect(url_for('user.dashboard'))
+
+
+@user.route('/add_base', methods=['POST'])
+@csrf.exempt
+def add_base():
+    if request.method == 'POST':
+        try:
+            if 'base-id' in request.form and 'api-key' in request.form:
+
+                if db.session.query(exists().where(and_(Base.base_id == request.form['base-id'], Base.api_key == request.form['api-key']))).scalar():
+                    flash("This account is already in use. Please try again.", 'error')
+                else:
+                    auth = AppAuthorization.query.filter(AppAuthorization.api_key == request.form['api-key']).scalar()
+                    if auth is None:
+                        a = AppAuthorization()
+                        a.user_id = current_user.id
+                        a.api_key = request.form['api-key']
+                        a.save()
+
+                    if db.session.query(exists().where(AppAuthorization.api_key == request.form['api-key'])).scalar():
+                        b = Base()
+                        b.user_id = current_user.id
+                        b.base_id = request.form['base-id']
+                        b.api_key = request.form['api-key']
+
+                        b.save()
+
+                        flash('Your base has been successfully added!', 'success')
+
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your base. Please try again.', 'error')
+
+        return redirect(url_for('user.dashboard'))
+
+
+@user.route('/connect_table', methods=['GET','POST'])
+@csrf.exempt
+def connect_table():
+    from app.blueprints.api.models.tables import Table
+
+    if request.method == 'POST':
+        try:
+            from app.blueprints.api.models.bases import Base
+
+            if 'table-name' in request.form and request.form['table-name'] and 'base-id' in request.form and request.form['base-id']:
+                if db.session.query(exists().where(and_(Table.base_id == request.form['base-id'], Table.table_name == request.form['table-name']))).scalar():
+                    flash("This table has already been added for this base. Please try again.", 'error')
+                else:
+
+                    t = Table()
+                    t.user_id = current_user.id
+                    t.base_id = request.form['base-id']
+                    t.table_name = request.form['table-name']
+
+                    t.save()
+
+                    flash('Your table has been successfully added! Please select one from the list.', 'success')
+
+            elif 'existing-table' in request.form:
+                flash('Existing table has been selected.', 'success')
+            else:
+                flash('Please select an existing table or add a new one.', 'error')
+
+            tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['base-id']).all()
+            return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your table. Please try again.', 'error')
+
+        return redirect(url_for('user.dashboard'))
+
+
+@user.route('/add_table', methods=['POST'])
+@csrf.exempt
+def add_table():
+    if request.method == 'POST':
+        try:
+            from app.blueprints.api.models.tables import Table
+            if 'table-name' in request.form:
+                if db.session.query(exists().where(and_(Table.base_id == request.form['base-id'], Table.table_name == request.form['table-name']))).scalar():
+                    flash("This table has already been added. Please try again.", 'error')
+                else:
+                    from app.blueprints.api.models.tables import Table
+
+                    t = Table()
+                    t.user_id = current_user.id
+                    t.base_id = request.form['base-id']
+                    t.table_name = request.form['table-name']
+
+                    t.save()
+
+                    flash('Your base has been successfully added!', 'success')
+
+        except Exception as e:
+            print_traceback(e)
+            flash('There was an error adding your base. Please try again.', 'error')
+
+        return render_template('user/connect_table.html', base=request.form['base-id'])
 
 
 # Settings -------------------------------------------------------------------
@@ -313,87 +452,6 @@ def auth(app):
         print_traceback(e)
         flash("There was an error connecting to this app. Please try again.", 'error')
         return redirect(url_for('user.dashboard'))
-
-
-@user.route('/add_base', methods=['POST'])
-@csrf.exempt
-def add_base():
-    if request.method == 'POST':
-        try:
-            if 'base-id' in request.form and 'api-key' in request.form:
-
-                if db.session.query(exists().where(and_(Base.base_id == request.form['base-id'], Base.api_key == request.form['api-key']))).scalar():
-                    flash("This account is already in use. Please try again.", 'error')
-                else:
-                    auth = AppAuthorization.query.filter(AppAuthorization.api_key == request.form['api-key']).scalar()
-                    if auth is None:
-                        a = AppAuthorization()
-                        a.user_id = current_user.id
-                        a.api_key = request.form['api-key']
-                        a.save()
-
-                    if db.session.query(exists().where(AppAuthorization.api_key == request.form['api-key'])).scalar():
-                        b = Base()
-                        b.user_id = current_user.id
-                        b.base_id = request.form['base-id']
-                        b.api_key = request.form['api-key']
-
-                        b.save()
-
-                        flash('Your base has been successfully added!', 'success')
-
-        except Exception as e:
-            print_traceback(e)
-            flash('There was an error adding your base. Please try again.', 'error')
-
-        return redirect(url_for('user.dashboard'))
-
-
-@user.route('/get_airtable_bases', methods=['POST'])
-@csrf.exempt
-def get_airtable_bases():
-    if request.method == 'POST':
-        try:
-
-            # Set this to true to include linked table records.
-            # This will acts as a switch to quickly turn the functionality on and off.
-            include_linked = False
-
-            if 'base' in request.form and 'table' in request.form and 'token' in request.form:
-                events = {}
-
-                # Grab the base id, table, and api key from the form
-                base_id = request.form['base']
-                table_name = request.form['table']
-                api_key = request.form['token']
-
-                at = Airtable(base_id, table_name, api_key=api_key)
-
-                # Get 20 records from the Airtable table and get their column names
-                for page in at.get_iter(maxRecords=20):
-                    for record in page:
-                        events.update({'table_name': 'Table Name', 'record_id': 'Record Id'})
-                        for field in record['fields']:
-                            if include_linked and isinstance(record['fields'][field], list) and len(record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and record['fields'][field][0].startswith('rec'):
-                                try:
-                                    linked_record = at.get(record['fields'][field][0])
-                                    for linked_field in linked_record['fields']:
-                                        if not (isinstance(linked_record['fields'][linked_field], list) and len(linked_record['fields'][linked_field]) > 0 and isinstance(linked_record['fields'][linked_field][0], str) and linked_record['fields'][linked_field][0].startswith('rec')):
-                                            events.update({field + '::' + linked_field: field + '::' + linked_field})
-                                except Exception:
-                                    pass
-                            else:
-                                events.update({field: field})
-
-                if not events:
-                    from app.blueprints.api.apps.airtable.events import get_event_data_class
-                    events = get_event_data_class(None)['airtable']
-
-                return jsonify({'events': events})
-
-        except Exception as e:
-            print_traceback(e)
-            return None
 
 
 @user.route('/update_send_failure_email', methods=['POST'])

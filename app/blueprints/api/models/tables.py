@@ -4,21 +4,25 @@ from lib.util_sqlalchemy import ResourceMixin
 from app.extensions import db
 
 
-class AppAuthorization(ResourceMixin, db.Model):
+class Table(ResourceMixin, db.Model):
 
-    __tablename__ = 'app_authorizations'
+    __tablename__ = 'tables'
 
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
-    api_key = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
+    table_id = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    table_name = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
-                           index=True, nullable=True, primary_key=False, unique=True)
+                           index=True, nullable=True, primary_key=False, unique=False)
+
+    base_id = db.Column(db.String(255), db.ForeignKey('bases.base_id', onupdate='CASCADE', ondelete='CASCADE'),
+                        index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.
-        super(AppAuthorization, self).__init__(**kwargs)
+        super(Table, self).__init__(**kwargs)
 
     @classmethod
     def find_by_id(cls, identity):
@@ -29,8 +33,8 @@ class AppAuthorization(ResourceMixin, db.Model):
         :type identity: str
         :return: User instance
         """
-        return AppAuthorization.query.filter(
-          (AppAuthorization.id == identity).first())
+        return Table.query.filter(
+          (Table.id == identity).first())
 
     @classmethod
     def search(cls, query):
@@ -45,7 +49,7 @@ class AppAuthorization(ResourceMixin, db.Model):
             return ''
 
         search_query = '%{0}%'.format(query)
-        search_chain = (AppAuthorization.id.ilike(search_query))
+        search_chain = (Table.id.ilike(search_query))
 
         return or_(*search_chain)
 
@@ -62,12 +66,12 @@ class AppAuthorization(ResourceMixin, db.Model):
         delete_count = 0
 
         for id in ids:
-            app_authorization = AppAuthorization.query.get(id)
+            table = Table.query.get(id)
 
-            if app_authorization is None:
+            if table is None:
                 continue
 
-            app_authorization.delete()
+            table.delete()
 
             delete_count += 1
 

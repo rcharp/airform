@@ -12,6 +12,7 @@ from app.extensions import db
 from sqlalchemy import exists, and_, or_, inspect
 from flask import current_app
 from importlib import import_module
+from airtable import Airtable
 
 
 # Create a distinct integration id for the integration.
@@ -57,6 +58,51 @@ def generate_app_id(size=6, chars=string.digits):
         return app_id
     else:
         generate_app_id()
+
+
+def get_airtable_bases(request):
+    if request.method == 'POST':
+        try:
+
+            # Set this to true to include linked table records.
+            # This will acts as a switch to quickly turn the functionality on and off.
+            include_linked = False
+
+            if 'base' in request.form and 'table' in request.form and 'token' in request.form:
+                events = {}
+
+                # Grab the base id, table, and api key from the form
+                base_id = request.form['base']
+                table_name = request.form['table']
+                api_key = request.form['token']
+
+                at = Airtable(base_id, table_name, api_key=api_key)
+
+                # Get 20 records from the Airtable table and get their column names
+                for page in at.get_iter(maxRecords=20):
+                    for record in page:
+                        events.update({'table_name': 'Table Name', 'record_id': 'Record Id'})
+                        for field in record['fields']:
+                            if include_linked and isinstance(record['fields'][field], list) and len(record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and record['fields'][field][0].startswith('rec'):
+                                try:
+                                    linked_record = at.get(record['fields'][field][0])
+                                    for linked_field in linked_record['fields']:
+                                        if not (isinstance(linked_record['fields'][linked_field], list) and len(linked_record['fields'][linked_field]) > 0 and isinstance(linked_record['fields'][linked_field][0], str) and linked_record['fields'][linked_field][0].startswith('rec')):
+                                            events.update({field + '::' + linked_field: field + '::' + linked_field})
+                                except Exception as e:
+                                    pass
+                            else:
+                                events.update({field: field})
+
+                if not events:
+                    from app.blueprints.api.apps.airtable.events import get_event_data_class
+                    events = get_event_data_class(None)['airtable']
+
+                return jsonify({'events': events})
+
+        except Exception as e:
+            print_traceback(e)
+            return None
 
 
 def strip_imported_value(value):
