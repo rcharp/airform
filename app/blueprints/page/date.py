@@ -7,6 +7,7 @@ import pytz
 import tzlocal
 # import app.blueprints.simple.prettydate as p
 from json import dumps
+from dateutil.parser import parse
 
 now = dtime.now()
 yesterday = now - datetime.timedelta(days=1)
@@ -41,6 +42,15 @@ def convert_end_time(int_time):
     return time_tuple
 """
 
+def is_date(string, fuzzy=False):
+    try:
+        parse(string, fuzzy=fuzzy)
+        return True
+
+    except ValueError:
+        return False
+    except Exception:
+        return False
 
 # Time conversions ###################################
 def get_short_date_string(timestamp):

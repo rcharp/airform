@@ -13,6 +13,7 @@ from sqlalchemy import exists, and_, or_, inspect
 from flask import current_app
 from importlib import import_module
 from airtable import Airtable
+from app.blueprints.page.date import is_date
 
 
 # Create a distinct integration id for the integration.
@@ -119,6 +120,9 @@ def get_table(table_name, base_id, api_key):
                 for field in record['fields']:
                     if field not in columns:
                         columns.append(field)
+
+                    val = record['fields'][field]
+                    type = get_type(val)
                     # if include_linked and isinstance(record['fields'][field], list) and len(
                     #         record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and \
                     #         record['fields'][field][0].startswith('rec'):
@@ -137,7 +141,7 @@ def get_table(table_name, base_id, api_key):
                     #         pass
                     # else:
 
-                    r.update({field: record['fields'][field]})
+                    r.update({field: val, 'type':type})
                 table.append(r)
 
         # Sort the columns alphabetically
@@ -145,7 +149,37 @@ def get_table(table_name, base_id, api_key):
 
         return table, columns
     except Exception as e:
+        print_traceback(e)
         return None
+
+
+def get_type(val):
+    if is_date(val):
+        return 'Date'
+    elif is_email(val):
+        return 'Email'
+    elif is_checkbox(val):
+        return 'Checkbox'
+    elif isinstance(val, str):
+        return 'String'
+    else:
+        return 'None'
+
+
+def is_email(email):
+    try:
+        regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+        if (re.search(regex, email)):
+            return True
+    except Exception:
+        return False
+
+
+def is_checkbox(val):
+    if val == 'True' or val == 'False':
+        return True
+    else:
+        return False
 
 
 def delete_table(table_id):
