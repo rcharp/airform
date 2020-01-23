@@ -108,12 +108,14 @@ def get_table(table_name, base_id, api_key):
 
         at = Airtable(base_id, table_name, api_key=api_key)
 
+        table = list()
         columns = list()
 
         # Get 20 records from the Airtable table and get their column names
-        for page in at.get_iter(maxRecords=5):
+        for page in at.get_iter(maxRecords=100):
 
             for record in page:
+                r = dict()
                 for field in record['fields']:
                     if field not in columns:
                         columns.append(field)
@@ -127,14 +129,21 @@ def get_table(table_name, base_id, api_key):
                     #                     linked_record['fields'][linked_field]) > 0 and isinstance(
                     #                     linked_record['fields'][linked_field][0], str) and
                     #                     linked_record['fields'][linked_field][0].startswith('rec')):
-                    #                 return
-                    #                 # events.update({field + '::' + linked_field: field + '::' + linked_field})
+                    #
+                    #                 records = dict()
+                    #                 records.update({field + '::' + linked_field: field + '::' + linked_field})
+                    #                 table.append(r)
                     #     except Exception as e:
                     #         pass
                     # else:
-                    #     columns.update({field: field})
 
-        return columns
+                    r.update({field: record['fields'][field]})
+                table.append(r)
+
+        # Sort the columns alphabetically
+        columns.sort()
+
+        return table, columns
     except Exception as e:
         return None
 

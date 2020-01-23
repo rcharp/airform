@@ -192,7 +192,7 @@
                 <div class="content" style="min-height:1000px;">
                     <!-- Start Content -->
                     <div class="row" style="margin-bottom:150px;">
-                        <div class="col-lg-12" style="width:40%;min-width:320px; margin:0 auto; float:none;">
+                        <div class="col-lg-12" style="width:60%;min-width:320px; margin:0 auto; float:none;">
                             <!-- Block Tabs Alternative Style -->
                             <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
@@ -209,7 +209,7 @@
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
                                                 <div class="block-content">
-                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table', bases=bases ) }}" method="post">
+                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table' ) }}" method="post">
                                                         <div class="form-group">
                                                             <h2>{{ table_name }}</h2><br />
                                                         </div>
@@ -219,7 +219,7 @@
                                                             {% for column in columns %}
                                                                 <label class="col-md-12" for="{{ column }}">{{ column }}</label>
                                                                 <div class="col-md-12">
-                                                                    <input class="form-control" type="text" id="{{ column }}" name="{{ column }}" placeholder="{{ column }}"><br />
+                                                                    <input class="form-control" type="text" id="{{ column }}" name="{{ column }}" placeholder="Enter a value"><br />
                                                                 </div>
                                                             {% endfor %}
                                                         </div>
@@ -244,38 +244,29 @@
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
                                                 <div class="block-content">
-                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table', bases=bases ) }}" method="post">
+                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table' ) }}" method="post">
                                                         <div class="form-group">
                                                             <h2>{{ table_name }}</h2><br />
                                                         </div>
                                                         <div class="form-group">
-                                                            <h4>Choose an existing table</h4><br />
-                                                            <label class="col-md-12" for="existing-table">Select a table</label>
-                                                            <div class="col-xs-12">
-                                                                <select class="form-control" id="existing-table" name="existing-table" size="1">
-                                                                    {% for table in tables %}
-                                                                        <option value="{{ table.table_name }}">{{ table.table_name }}</option>
-                                                                    {% endfor %}
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <h3>- or -</h3><br />
-                                                        <div class="form-group">
-                                                            <h4>Add a new table</h4><br />
-                                                            <label class="col-md-12" for="table-name">Enter a table name</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" type="hidden" id="base-id" name="base-id" value="{{ base }}">
-                                                                <input class="form-control" type="text" id="table-name" name="table-name" placeholder="Table name" onkeyup="NewTable(this)">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-xs-12">
-                                                                <button class="btn btn-sm btn-primary" id="back-button" type="button" style="float:left;"
-                                                                   onclick="window.location.href = '{{ url_for('user.new_form') }}'">
-                                                                    <i class="fa fa-arrow-left"></i>&nbsp;&nbsp; Back
-                                                                </button>
-                                                                <button class="btn btn-sm btn-primary" id="submit-button" type="submit" style="float:right"><i class="fa fa-arrow-right push-5-r"></i> Continue</button>
-                                                            </div>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        {% for column in columns %}
+                                                                            <th class="text-center">{{ column }}</th>
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for record in table %}
+                                                                    <tr>
+                                                                        {% for column in columns %}
+                                                                            <td class="text-center">{{ record[column] }}</td>
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </form>
                                                 </div>

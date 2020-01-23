@@ -369,10 +369,10 @@ def connect_table():
                 auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
                 api_key = auth.api_key
 
-                columns = get_table(request.form['existing-table'], base_id, api_key)
+                t, columns = get_table(request.form['existing-table'], base_id, api_key)
 
-                if columns is not None:
-                    return render_template('user/create_form.html', table_name=request.form['existing-table'], columns=columns)
+                if columns is not None and t is not None:
+                    return render_template('user/create_form.html', table_name=request.form['existing-table'], columns=columns, base=base_id, table=t)
                 else:
                     flash("That table wasn't found on this base. Please select another one.", 'error')
                     tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['base-id']).all()
@@ -386,6 +386,9 @@ def connect_table():
             print_traceback(e)
             flash('There was an error adding your table. Please try again.', 'error')
             return redirect(url_for('user.dashboard'))
+
+    tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.args.get('base_id')).all()
+    return render_template('user/connect_table.html', base=request.args.get('base_id'), tables=tables)
 
 
 @user.route('/add_table', methods=['POST'])
