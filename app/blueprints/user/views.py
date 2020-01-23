@@ -231,11 +231,13 @@ def dashboard():
         current_user.save()
 
     from app.blueprints.api.models.bases import Base
+    from app.blueprints.api.models.tables import Table
 
+    tables = Table.query.filter(Table.user_id == current_user.id).all()
     bases = Base.query.filter(Base.user_id == current_user.id).all()
     keys = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).all()
 
-    return render_template('user/dashboard.html', current_user=current_user, bases=bases, keys=keys)
+    return render_template('user/dashboard.html', current_user=current_user, bases=bases, tables=tables, keys=keys)
 
 
 # Forms and Bases -------------------------------------------------------------------
@@ -263,7 +265,7 @@ def new_form():
     return render_template('user/new_form.html', current_user=current_user, bases=bases)
 
 
-@user.route('/connect_base', methods=['POST'])
+@user.route('/connect_base', methods=['GET','POST'])
 @csrf.exempt
 def connect_base():
     if request.method == 'POST':
@@ -339,7 +341,6 @@ def add_base():
 @csrf.exempt
 def connect_table():
     from app.blueprints.api.models.tables import Table
-
     if request.method == 'POST':
         try:
             from app.blueprints.api.models.bases import Base
@@ -364,23 +365,27 @@ def connect_table():
                 table = Table.query.filter(and_(Table.table_name == request.form['existing-table']), Table.user_id == current_user.id).scalar()
                 base_id = table.base_id
 
-                from app.blueprints.api.app_auths import AppAuthorization
+                from app.blueprints.api.models.app_auths import AppAuthorization
                 auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
                 api_key = auth.api_key
 
-                t = get_table(request.form['existing-table'], base_id, api_key)
+                columns = get_table(request.form['existing-table'], base_id, api_key)
 
-                return render_template('user/create_form.html', table_name=request.form['existing-table'])
+                if columns is not None:
+                    return render_template('user/create_form.html', table_name=request.form['existing-table'], columns=columns)
+                else:
+                    flash("That table wasn't found on this base. Please select another one.", 'error')
+                    tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['base-id']).all()
+                    return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
             else:
                 flash('Please select an existing table or add a new one.', 'error')
 
-            tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['base-id']).all()
-            return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
+                tables = Table.query.filter(and_(Table.user_id == current_user.id), Table.base_id == request.form['base-id']).all()
+                return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
         except Exception as e:
             print_traceback(e)
             flash('There was an error adding your table. Please try again.', 'error')
-
-        return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard'))
 
 
 @user.route('/add_table', methods=['POST'])
@@ -394,19 +399,29 @@ def add_table():
                     flash("This table has already been added. Please try again.", 'error')
                 else:
                     from app.blueprints.api.models.tables import Table
+                    from app.blueprints.api.models.app_auths import AppAuthorization
 
-                    t = Table()
-                    t.user_id = current_user.id
-                    t.base_id = request.form['base-id']
-                    t.table_name = request.form['table-name']
+                    auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
+                    api_key = auth.api_key
 
-                    t.save()
+                    columns = get_table(request.form['table-name'], request.form['table-name'], api_key)
 
-                    flash('Your base has been successfully added!', 'success')
+                    if columns is not None:
+
+                        t = Table()
+                        t.user_id = current_user.id
+                        t.base_id = request.form['base-id']
+                        t.table_name = request.form['table-name']
+
+                        t.save()
+
+                        flash('Your base has been successfully added!', 'success')
+                    else:
+                        flash("This table wasn't found on this base. Please try again.", 'error')
 
         except Exception as e:
             print_traceback(e)
-            flash('There was an error adding your base. Please try again.', 'error')
+            flash('There was an error adding this table. Please try again.', 'error')
 
         return render_template('user/connect_table.html', base=request.form['base-id'])
 
@@ -422,8 +437,6 @@ def create_form():
             from app.blueprints.api.models.bases import Base
 
             if 'table-name' in request.form and request.form['table-name']:
-
-
                 tables = Table.query.filter(and_(Table.user_id == current_user.id),
                                         Table.base_id == request.form['base-id']).all()
                 return render_template('user/connect_table.html', base=request.form['base-id'], tables=tables)
@@ -432,6 +445,25 @@ def create_form():
             flash('There was an error adding your table. Please try again.', 'error')
 
         return redirect(url_for('user.dashboard'))
+
+
+# Used for the integrations list on the dashboard. Delete the integration when the X is clicked.
+@user.route('/delete_table/<table_id>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def delete_table(table_id):
+    try:
+        from app.blueprints.api.api_functions import delete_table
+
+        # Delete the integration
+        delete_table(table_id)
+
+        flash('Table has been deleted.', 'success')
+    except Exception as e:
+        print(e)
+        flash('There was a problem deleting this table. Please try again.', 'error')
+    return redirect(url_for('user.dashboard'))
+
 
 # Settings -------------------------------------------------------------------
 @user.route('/settings', methods=['GET','POST'])

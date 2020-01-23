@@ -60,20 +60,20 @@
         <!-- Shepherd JS -->
         <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>
 
-        <!-- Colorlib -->
-        <!-- Icons font CSS-->
-        <link href="../../../../static/colorlib/form/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-        <link href="../../../../static/colorlib/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-        <!-- Font special for pages-->
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-        <!-- Vendor CSS-->
-        <link href="../../../../static/colorlib/form/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-        <link href="../../../../static/colorlib/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-        <!-- Main CSS-->
-        <link href="../../../../static/colorlib/form/css/main.css" rel="stylesheet" media="all">
-        <!-- End Colorlib -->
+{#        <!-- Colorlib -->#}
+{#        <!-- Icons font CSS-->#}
+{#        <link href="../../../../static/colorlib/form/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">#}
+{#        <link href="../../../../static/colorlib/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">#}
+{#        <!-- Font special for pages-->#}
+{#        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">#}
+{##}
+{#        <!-- Vendor CSS-->#}
+{#        <link href="../../../../static/colorlib/form/vendor/select2/select2.min.css" rel="stylesheet" media="all">#}
+{#        <link href="../../../../static/colorlib/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">#}
+{##}
+{#        <!-- Main CSS-->#}
+{#        <link href="../../../../static/colorlib/form/css/main.css" rel="stylesheet" media="all">#}
+{#        <!-- End Colorlib -->#}
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="../../../../static/oneui/assets/css/themes/flat.min.css"> -->
@@ -177,7 +177,7 @@
                     <div class="row items-push">
                         <div class="col-sm-7">
                             <h1 class="font-w300 text-white">
-                                Choose a table
+                                Create or Update a Record
                             </h1>
                         </div>
                     </div>
@@ -196,47 +196,37 @@
                             <!-- Block Tabs Alternative Style -->
                             <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
-                                    <li id="new-nav" style="padding-top:5px;min-width:140px;width:45%;display:block">
-                                        <a href="#new-nav"><h3>Create a New Record</h3></a>
+                                    <li class="active" id="new-nav" style="padding-top:5px;min-width:140px;width:50%;display:block">
+                                        <a href="#new"><h3>Create a New Record</h3></a>
                                     </li>
-                                    <li id="existing-nav" style="padding-top:5px;min-width:140px;width:45%;display:block">
-                                        <a href="#existing-nav"><h3>Update an Existing Record</h3></a>
+                                    <li id="existing-nav" style="padding-top:5px;min-width:140px;width:50%;display:block">
+                                        <a href="#existing"><h3>Update an Existing Record</h3></a>
                                     </li>
                                 </ul>
                                 <div class="block-content tab-content" id="tab_content" style="padding-right:10px;overflow:visible !important; min-height:500px;">
-                                    <div class="tab-pane active" id="new-nav" name="tab_pane" style="min-height:250px;overflow:hidden">
+                                    <div class="tab-pane active" id="new" name="tab_pane" style="min-height:250px;overflow:hidden">
                                         <div class="col-md-4" style="width:90%; margin:0 auto; float:none;">
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
                                                 <div class="block-content">
                                                     <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table', bases=bases ) }}" method="post">
                                                         <div class="form-group">
-                                                            <h4>Selected base: {{ base }}</h4><br />
+                                                            <h2>{{ table_name }}</h2><br />
                                                         </div>
                                                         <div class="form-group">
-                                                            <h4>Choose an existing table</h4><br />
-                                                            <label class="col-md-12" for="existing-table">Select a table</label>
-                                                            <div class="col-xs-12">
-                                                                <select class="form-control" id="existing-table" name="existing-table" size="1">
-                                                                    {% for table in tables %}
-                                                                        <option value="{{ table.table_name }}">{{ table.table_name }}</option>
-                                                                    {% endfor %}
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <h3>- or -</h3><br />
-                                                        <div class="form-group">
-                                                            <h4>Add a new table</h4><br />
-                                                            <label class="col-md-12" for="table-name">Enter a table name</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" type="hidden" id="base-id" name="base-id" value="{{ base }}">
-                                                                <input class="form-control" type="text" id="table-name" name="table-name" placeholder="Table name" onkeyup="NewTable(this)">
-                                                            </div>
+                                                        <h4>Available columns:</h4><br />
+                                                            <input class="form-control" type="hidden" id="base-id" name="base-id" value="{{ base }}">
+                                                            {% for column in columns %}
+                                                                <label class="col-md-12" for="{{ column }}">{{ column }}</label>
+                                                                <div class="col-md-12">
+                                                                    <input class="form-control" type="text" id="{{ column }}" name="{{ column }}" placeholder="{{ column }}"><br />
+                                                                </div>
+                                                            {% endfor %}
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="col-xs-12">
                                                                 <button class="btn btn-sm btn-primary" id="back-button" type="button" style="float:left;"
-                                                                   onclick="window.location.href = '{{ url_for('user.new_form') }}'">
+                                                                   onclick="window.location.href = '{{ url_for('user.connect_table', base_id=base) }}'">
                                                                     <i class="fa fa-arrow-left"></i>&nbsp;&nbsp; Back
                                                                 </button>
                                                                 <button class="btn btn-sm btn-primary" id="submit-button" type="submit" style="float:right"><i class="fa fa-arrow-right push-5-r"></i> Continue</button>
@@ -249,14 +239,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane" id="existing-nav" name="tab_pane" style="min-height:250px;overflow:hidden">
+                                    <div class="tab-pane" id="existing" name="tab_pane" style="min-height:250px;overflow:hidden">
                                         <div class="col-md-4" style="width:90%; margin:0 auto; float:none;">
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
                                                 <div class="block-content">
                                                     <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_table', bases=bases ) }}" method="post">
                                                         <div class="form-group">
-                                                            <h4>Selected base: {{ base }}</h4><br />
+                                                            <h2>{{ table_name }}</h2><br />
                                                         </div>
                                                         <div class="form-group">
                                                             <h4>Choose an existing table</h4><br />

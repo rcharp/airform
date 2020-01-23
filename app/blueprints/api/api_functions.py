@@ -61,42 +61,87 @@ def generate_app_id(size=6, chars=string.digits):
 
 
 # noinspection PyInterpreter
+# def get_table(table_name, base_id, api_key):
+#     # noinspection PyInterpreter
+#     try:
+#
+#         # Set this to true to include linked table records.
+#         # This will acts as a switch to quickly turn the functionality on and off.
+#         include_linked = False
+#
+#         at = Airtable(base_id, table_name, api_key=api_key)
+#
+#         columns = dict()
+#
+#         # Get 20 records from the Airtable table and get their column names
+#         for page in at.get_iter(maxRecords=5):
+#             return page
+#             for record in page:
+#                 for field in record['fields']:
+#                     print(field)
+#                     # if include_linked and isinstance(record['fields'][field], list) and len(
+#                     #         record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and \
+#                     #         record['fields'][field][0].startswith('rec'):
+#                     #     try:
+#                     #         linked_record = at.get(record['fields'][field][0])
+#                     #         for linked_field in linked_record['fields']:
+#                     #             if not (isinstance(linked_record['fields'][linked_field], list) and len(
+#                     #                     linked_record['fields'][linked_field]) > 0 and isinstance(
+#                     #                     linked_record['fields'][linked_field][0], str) and
+#                     #                     linked_record['fields'][linked_field][0].startswith('rec')):
+#                     #                 return
+#                     #                 # events.update({field + '::' + linked_field: field + '::' + linked_field})
+#                     #     except Exception as e:
+#                     #         pass
+#                     # else:
+#                     #     columns.update({field: field})
+#
+#     except Exception as e:
+#         print_traceback(e)
+#         return None
+
 def get_table(table_name, base_id, api_key):
-    if request.method == 'POST':
-        # noinspection PyInterpreter
-        try:
+    try:
+        # Set this to true to include linked table records.
+        # This will acts as a switch to quickly turn the functionality on and off.
+        include_linked = False
 
-            # Set this to true to include linked table records.
-            # This will acts as a switch to quickly turn the functionality on and off.
-            include_linked = False
+        at = Airtable(base_id, table_name, api_key=api_key)
 
-            at = Airtable(base_id, table_name, api_key=api_key)
+        columns = list()
 
-            columns = dict()
+        # Get 20 records from the Airtable table and get their column names
+        for page in at.get_iter(maxRecords=5):
 
-            # Get 20 records from the Airtable table and get their column names
-            for page in at.get_iter(maxRecords=5):
-                for record in page:
-                    for field in record['fields']:
-                        if include_linked and isinstance(record['fields'][field], list) and len(
-                                record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and \
-                                record['fields'][field][0].startswith('rec'):
-                            try:
-                                linked_record = at.get(record['fields'][field][0])
-                                for linked_field in linked_record['fields']:
-                                    if not (isinstance(linked_record['fields'][linked_field], list) and len(
-                                            linked_record['fields'][linked_field]) > 0 and isinstance(
-                                            linked_record['fields'][linked_field][0], str) and
-                                            linked_record['fields'][linked_field][0].startswith('rec')):
-                                        events.update({field + '::' + linked_field: field + '::' + linked_field})
-                            except Exception as e:
-                                pass
-                        else:
-                            columns.update({field: field})
+            for record in page:
+                for field in record['fields']:
+                    if field not in columns:
+                        columns.append(field)
+                    # if include_linked and isinstance(record['fields'][field], list) and len(
+                    #         record['fields'][field]) > 0 and isinstance(record['fields'][field][0], str) and \
+                    #         record['fields'][field][0].startswith('rec'):
+                    #     try:
+                    #         linked_record = at.get(record['fields'][field][0])
+                    #         for linked_field in linked_record['fields']:
+                    #             if not (isinstance(linked_record['fields'][linked_field], list) and len(
+                    #                     linked_record['fields'][linked_field]) > 0 and isinstance(
+                    #                     linked_record['fields'][linked_field][0], str) and
+                    #                     linked_record['fields'][linked_field][0].startswith('rec')):
+                    #                 return
+                    #                 # events.update({field + '::' + linked_field: field + '::' + linked_field})
+                    #     except Exception as e:
+                    #         pass
+                    # else:
+                    #     columns.update({field: field})
 
-        except Exception as e:
-            print_traceback(e)
-            return None
+        return columns
+    except Exception as e:
+        return None
+
+
+def delete_table(table_id):
+    from app.blueprints.api.tasks import delete_table
+    delete_table(table_id)
 
 
 def strip_imported_value(value):

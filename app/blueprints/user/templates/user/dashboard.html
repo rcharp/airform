@@ -227,14 +227,20 @@
                                                                 <th class="text-center" style="width:150px;"># forms created</th>
                                                                 <th class="text-center">Table</th>
                                                                 <th class="text-center">Base</th>
+                                                                <th class="text-center">Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for base in bases %}
+                                                        {% for table in tables %}
                                                             <tr>
                                                                 <td class="text-center">1</td>
-                                                                <td class="text-center">{{ base.base_id }}</td>
-                                                                <td class="text-center">{{ base.api_key }}</td>
+                                                                <td class="text-center">{{ table.table_name }}</td>
+                                                                <td class="text-center">{{ table.base_id }}</td>
+                                                                <td class="text-center">
+                                                                    <button class="btn btn-sm btn-danger push-5-r push-10" id="{{ table.id }}" type="button" data-toggle="tooltip" title="Delete Table" onclick="ConfirmDeleteTable(this);">
+                                                                    <i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </td>
                                                             </tr>
                                                         {% endfor %}
                                                         </tbody>
@@ -361,6 +367,17 @@
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-down');
                     document.getElementById('name-sort-icon').classList.remove('fa-arrow-up');
                     document.getElementById('name-sort-icon').classList.add('fa-sort');
+                }
+            }
+
+            function ConfirmDeleteTable(sel) {
+                if (confirm('Are you sure you want to delete this table?')) {
+                    var table_id = sel.id;
+                    var url = '{{ url_for('user.delete_table', table_id='DUMMY_VALUE') }}';
+                    url = url.replace(/DUMMY_VALUE/, table_id).toLowerCase();
+                    window.location.href= url;
+                } else {
+                    return false;
                 }
             }
         </script>

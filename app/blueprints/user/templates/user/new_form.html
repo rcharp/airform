@@ -60,20 +60,20 @@
         <!-- Shepherd JS -->
         <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>
 
-        <!-- Colorlib -->
-        <!-- Icons font CSS-->
-        <link href="../../../../static/colorlib/form/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-        <link href="../../../../static/colorlib/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-        <!-- Font special for pages-->
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-        <!-- Vendor CSS-->
-        <link href="../../../../static/colorlib/form/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-        <link href="../../../../static/colorlib/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-        <!-- Main CSS-->
-        <link href="../../../../static/colorlib/form/css/main.css" rel="stylesheet" media="all">
-        <!-- End Colorlib -->
+{#        <!-- Colorlib -->#}
+{#        <!-- Icons font CSS-->#}
+{#        <link href="../../../../static/colorlib/form/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">#}
+{#        <link href="../../../../static/colorlib/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">#}
+{#        <!-- Font special for pages-->#}
+{#        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">#}
+{##}
+{#        <!-- Vendor CSS-->#}
+{#        <link href="../../../../static/colorlib/form/vendor/select2/select2.min.css" rel="stylesheet" media="all">#}
+{#        <link href="../../../../static/colorlib/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">#}
+{##}
+{#        <!-- Main CSS-->#}
+{#        <link href="../../../../static/colorlib/form/css/main.css" rel="stylesheet" media="all">#}
+{#        <!-- End Colorlib -->#}
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="../../../../static/oneui/assets/css/themes/flat.min.css"> -->
@@ -196,7 +196,7 @@
                             <!-- Block Tabs Alternative Style -->
                             <div class="block" style="border-radius:12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                 <ul class="nav nav-tabs nav-tabs-alt text-center" data-toggle="tabs">
-                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width100%;display:block">
+                                    <li id="settings_nav" style="padding-top:5px;min-width:140px;width:100%;display:block">
                                         <a href="#settings"><h3>Connect to an Airtable base&nbsp;<i class="si si-doc"></i></h3></a>
                                     </li>
                                 </ul>
@@ -206,7 +206,7 @@
                                             <!-- Bootstrap Login -->
                                             <div class="block block-themed">
                                                 <div class="block-content">
-                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_base', bases=bases ) }}" method="post">
+                                                    <form class="form-horizontal push-5-t" action="{{ url_for('user.connect_base' ) }}" method="post">
                                                         <div class="form-group">
                                                             <h4>Choose an existing Airtable base</h4><br />
                                                             <label class="col-md-12" for="existing-base">Select a base</label>
