@@ -360,7 +360,7 @@ def connect_table():
                     flash('Your table has been successfully added! Please select one from the list.', 'success')
 
             elif 'existing-table' in request.form:
-                from app.blueprints.api.api_functions import get_table
+                from app.blueprints.api.api_functions import get_table, get_columns
 
                 table = Table.query.filter(and_(Table.table_name == request.form['existing-table']), Table.user_id == current_user.id).scalar()
                 base_id = table.base_id
@@ -369,7 +369,8 @@ def connect_table():
                 auth = AppAuthorization.query.filter(AppAuthorization.user_id == current_user.id).scalar()
                 api_key = auth.api_key
 
-                t, columns = get_table(request.form['existing-table'], base_id, api_key)
+                t = get_table(request.form['existing-table'], base_id, api_key)
+                columns = get_columns(request.form['existing-table'], base_id, api_key)
 
                 if columns is not None and t is not None:
                     return render_template('user/create_form.html', table_name=request.form['existing-table'], columns=columns, base=base_id, table=t)

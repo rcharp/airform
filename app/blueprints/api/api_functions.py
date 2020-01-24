@@ -101,6 +101,31 @@ def generate_app_id(size=6, chars=string.digits):
 #         print_traceback(e)
 #         return None
 
+
+def get_columns(table_name, base_id, api_key):
+    try:
+        at = Airtable(base_id, table_name, api_key=api_key)
+
+        columns = list()
+
+        # Get 20 records from the Airtable table and get their column names
+        for page in at.get_iter(maxRecords=5):
+
+            for record in page:
+                for field in record['fields']:
+                    if not any(column['name'] == field for column in columns):
+
+                        val = record['fields'][field]
+                        type = get_type(val)
+
+                        columns.append({'name': field, 'type':type})
+
+        return columns
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
 def get_table(table_name, base_id, api_key):
     try:
         # Set this to true to include linked table records.
@@ -110,16 +135,13 @@ def get_table(table_name, base_id, api_key):
         at = Airtable(base_id, table_name, api_key=api_key)
 
         table = list()
-        columns = list()
 
         # Get 20 records from the Airtable table and get their column names
-        for page in at.get_iter(maxRecords=100):
+        for page in at.get_iter():
 
-            for record in page:
+            for record in sorted(page, key=lambda x: x['createdTime']):
                 r = dict()
                 for field in record['fields']:
-                    if field not in columns:
-                        columns.append(field)
 
                     val = record['fields'][field]
                     type = get_type(val)
@@ -144,10 +166,7 @@ def get_table(table_name, base_id, api_key):
                     r.update({field: val, 'type':type})
                 table.append(r)
 
-        # Sort the columns alphabetically
-        columns.sort()
-
-        return table, columns
+        return table
     except Exception as e:
         print_traceback(e)
         return None
@@ -176,7 +195,7 @@ def is_email(email):
 
 
 def is_checkbox(val):
-    if val == 'True' or val == 'False':
+    if val == 'True' or val == 'False' or val is True or val is False:
         return True
     else:
         return False

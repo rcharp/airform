@@ -217,9 +217,17 @@
                                                         <h4>Available columns:</h4><br />
                                                             <input class="form-control" type="hidden" id="base-id" name="base-id" value="{{ base }}">
                                                             {% for column in columns %}
-                                                                <label class="col-md-12" for="{{ column }}">{{ column }}</label>
+                                                                <label class="col-md-12" for="{{ column['name'] }}">{{ column['name'] }}</label>
                                                                 <div class="col-md-12">
-                                                                    <input class="form-control" type="text" id="{{ column }}" name="{{ column }}" placeholder="Enter a value"><br />
+                                                                {% if column['type'] == 'Date' %}
+                                                                    <input class="js-datepicker form-control" type="text" id="{{ column['name'] }}" name="{{ column['name'] }}" data-date-format="mm/dd/yyyy" placeholder="Enter a date"><br />
+                                                                {% elif column['type'] == 'Checkbox' %}
+                                                                    <label class="css-input css-checkbox css-checkbox-default">
+                                                                        <input type="checkbox" id="{{ column['name'] }}" name="{{ column['name'] }}"><span></span>
+                                                                    </label><br />
+                                                                {% else %}
+                                                                    <input class="form-control" type="text" id="{{ column['name'] }}" name="{{ column['name'] }}" placeholder="Enter a value"><br />
+                                                                {% endif %}
                                                                 </div>
                                                             {% endfor %}
                                                         </div>
@@ -253,7 +261,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         {% for column in columns %}
-                                                                            <th class="text-center">{{ column }}</th>
+                                                                            <th class="text-center">{{ column['name'] }}</th>
                                                                         {% endfor %}
                                                                     </tr>
                                                                 </thead>
@@ -261,7 +269,7 @@
                                                                 {% for record in table %}
                                                                     <tr>
                                                                         {% for column in columns %}
-                                                                            <td class="text-center">{{ record[column] }}</td>
+                                                                            <td class="text-center">{{ record[column['name']] }}</td>
                                                                         {% endfor %}
                                                                     </tr>
                                                                 {% endfor %}
