@@ -43,7 +43,7 @@ flask-paginate==0.5.2
 # numpy==1.8.0
 gdata==2.0.18
 amqp==2.4.1
-celery==4.2.1
+celery==5.2.2
 mail-parser==3.9.2
 html2text==2018.1.9
 emaildata==0.3.4
